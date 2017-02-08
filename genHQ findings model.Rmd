@@ -1,0 +1,39 @@
+Playing with functions on iGen study claims/values:
+
+Source "data": http://genhq.wpengine.com/wp-content/uploads/2016/01/iGen-Gen-Z-Tech-Disruption-Research-White-Paper-c-2016-Center-for-Generational-Kinetics.pdf
+
+So here, what I tried to do was set up what the population values might look like from this genHQ paper regarding GenZ. Study methodology stated that survery was administered to two populations: mainsample and oversample. In the mainsample, 1000 respondents were of age 14-69, while in oversample, 250 were of age 14-17, for a totalsample of 1250.
+
+```{r}
+library(ggplot2)
+set.seed(1)
+mainsample <- as.vector(sample(x = 14:69, 1000, replace = TRUE))
+oversample <- as.vector(sample(x = 14:17, 250, replace = TRUE))
+totalsample <- c(mainsample, oversample)
+
+labels <- cut(totalsample, breaks = c(-Inf, 20, 34, 52, Inf), labels = c("GenZ","Millenials","GenX", "Boomers"))
+age_df <- data.frame(labels, sample_ages)
+
+qplot(totalsample, fill = labels)
+
+```
+
+```{r}
+qplot(labels, fill = labels, xlab ="")
+```
+
+To find out the exact size of populations, using table function:
+
+```{r}
+table(age_df$labels)
+```
+
+Using plyr's count function:
+
+##Setting this to a value for future use
+```{r}
+library(plyr)
+gen_counts <- count(age_df, "labels")
+gen_counts
+```
+
